@@ -1,0 +1,33 @@
+{
+  "name": "nicely-placed-modification-logs",
+  "version": "1.0.0",
+  "description": "write modifications/events to append only logs. process those changes sequentially. like an _changes feed but from disk",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/nicely-placed-modification-logs.git"
+  },
+  "keywords": [
+    "changes",
+    "sequential",
+    "jobs",
+    "task"
+  ],
+  "author": "Ryan Day <soldair@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/npm/nicely-placed-modification-logs/issues"
+  },
+  "homepage": "https://github.com/npm/nicely-placed-modification-logs#readme",
+  "dependencies": {
+    "binary-split": "^1.0.0",
+    "once": "^1.3.3"
+  },
+  "devDependencies": {
+    "rimraf": "^2.4.4",
+    "tape": "^4.2.2"
+  }
+}
