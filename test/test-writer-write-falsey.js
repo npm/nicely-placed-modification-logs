@@ -14,11 +14,8 @@ test('can write', function (t) {
 
   var save = writer({dir:dir})
 
-  save("hi",function(err){
-    t.ok(!err,'should not have error')
-
-    var buf = fs.readFileSync(path.join(dir,'0000000000.log'))
-    t.equals(buf.length,3,'should have written 3 bytes. log message + delim')
+  save(false,function(err){
+    t.ok(err,'should have error')
 
     t.end()
     clean()

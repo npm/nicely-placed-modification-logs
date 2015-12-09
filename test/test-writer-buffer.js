@@ -6,19 +6,20 @@ var path = require('path')
 
 var clean = common.clean()
 
-test('can write', function (t) {
+test('can serialize written object', function (t) {
   var dir = path.join(__dirname,Date.now()+"_write")
   fs.mkdirSync(dir)
 
   clean.push(dir)
 
   var save = writer({dir:dir})
-
-  save("hi",function(err){
+ 
+  var b = new Buffer("hi")
+  save(b,function(err){
     t.ok(!err,'should not have error')
 
     var buf = fs.readFileSync(path.join(dir,'0000000000.log'))
-    t.equals(buf.length,3,'should have written 3 bytes. log message + delim')
+    t.equals(buf+"",'hi\n','should have written buffer')
 
     t.end()
     clean()
