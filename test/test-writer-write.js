@@ -1,5 +1,5 @@
 var common = require('./helper/common')
-var writer = require('../lib/writer.js')
+var writer = require('../')
 var test = require('tape')
 var fs = require('fs')
 var path = require('path')
@@ -14,12 +14,13 @@ test('can write', function (t) {
 
   var save = writer({dir:dir})
 
-  save("hi",function(err){
+  save.write("hi",function(err){
     t.ok(!err,'should not have error')
 
     var buf = fs.readFileSync(path.join(dir,'0000000000.log'))
     t.equals(buf.length,3,'should have written 3 bytes. log message + delim')
 
+    save.close()
     t.end()
     clean()
   })

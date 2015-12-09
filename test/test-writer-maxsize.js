@@ -1,5 +1,5 @@
 var common = require('./helper/common')
-var writer = require('../lib/writer.js')
+var writer = require('../')
 var test = require('tape')
 var fs = require('fs')
 var path = require('path')
@@ -15,13 +15,13 @@ test('can enforces maxSize', function (t) {
 
   var save = writer({dir:dir,maxSize:6})
 
-  save("hi",function(err){
+  save.write("hi",function(err){
     t.ok(!err,'should not have error')
 
-    save("hi",function(err){
+    save.write("hi",function(err){
       t.ok(!err,'should not have error')
 
-      save("hi",function(err){
+      save.write("hi",function(err){
         t.ok(!err,'should not have error')
 
         var buf = fs.readFileSync(path.join(dir,'0000000000.log'))
@@ -37,6 +37,7 @@ test('can enforces maxSize', function (t) {
         t.equals(path.basename(state.order[0]),'0000000000.log','should have log files in order')
         t.equals(state.data[state.order[1]].size,3,'should have correct log size in bytes')
 
+        save.close()
         t.end()
         clean()
       })

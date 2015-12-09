@@ -1,5 +1,5 @@
 var common = require('./helper/common')
-var writer = require('../lib/writer.js')
+var writer = require('../')
 var test = require('tape')
 var fs = require('fs')
 var path = require('path')
@@ -14,9 +14,10 @@ test('can write', function (t) {
 
   var save = writer({dir:dir})
 
-  save(false,function(err){
+  save.write(false,function(err){
     t.ok(err,'should have error')
 
+    save.close()
     t.end()
     clean()
   })

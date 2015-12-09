@@ -63,7 +63,7 @@ module.exports = function (opts) {
 
   emitter.write = logFunction
   emitter._q = _q
-  emitter.stop = stop
+  emitter.close = stop
   emitter.getState = function(){ 
     return logState
   }
@@ -74,10 +74,13 @@ module.exports = function (opts) {
   function stop(err){
     emitter._stopped = true
     if(err) emitter.emit('error',err)
-    if(_fd && !processing) {
-      fs.close(_fd,function(){
+    if(_fd !== false && !processing) {
+      var f = _fd
+      _fd = false
+      fs.close(f,function(){
         // best effort made.
-      }) 
+      })     
+ 
     }
   }
 
@@ -167,68 +170,22 @@ module.exports = function (opts) {
         processing = false
         while (cbs.length) cbs.shift()(err)
         if(emitter._stopped && _fd) {
-          fs.close(_fd,stop)
+          var f = _fd
+          _fd = false
+          fs.close(f,function(){
+            // all done
+          })
         }
       }
     }
   }
 }
 
+var listLogs = require('./lib/list')
 module.exports.listLogs = listLogs
-
-function listLogs (dir, suffix, cb) {
-  cb = once(cb)
-  fs.readdir(dir, function (err, files) {
-    if (err) return cb(err)
-    var todo = files.filter(function (f) {
-      return f.indexOf(suffix) === f.length - suffix.length
-    })
-    var c = todo.length
-
-    var result = {
-      order: [],
-      data: {}
-    }
-
-    if (!c) return cb(false, result)
-
-    stat()
-    stat()
-
-    function stat () {
-      var f = todo.shift()
-      if (!f) return
-      var p = path.join(dir, f)
-      result.order.push(p)
-      fs.stat(p, function (err, s) {
-        // stop everything.
-        if (err) return cb(err)
-        s._key = p
-        result.data[p] = s
-        if (!--c) return cb(false, result)
-        stat()
-      })
-    }
-  })
-}
 
 module.exports.read = require('./lib/reader')
 
+var nameLog = require('./lib/namelog')
 module.exports.nameLog = nameLog
 
-function nameLog (p, suffix, previous) {
-  if (!previous) return path.join(p, padNum(0) + suffix)
-  var name = path.basename(previous, suffix)
-  return path.join(p, padNum(+unPad(name) + 1) + suffix)
-}
-
-function padNum (n, to) {
-  to = to || 10
-  n = n + ''
-  while (n.length < to) n = '0' + n
-  return n
-}
-
-function unPad (n) {
-  return n.replace(/^[0]+/, '')
-}

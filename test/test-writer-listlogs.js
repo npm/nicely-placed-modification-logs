@@ -2,7 +2,7 @@ var common = require('./helper/common')
 var path = require('path')
 var rimraf = require('rimraf')
 var test = require('tape')
-var writer = require('../lib/writer')
+var writer = require('../')
 
 var clean = common.clean();
 
@@ -14,8 +14,6 @@ test('can list', function (t) {
     t.ok(!err, 'should not have error making mock dir')
     writer.listLogs(dir, '.foo', function (err, data) {
       t.ok(!err, 'should not have error reading data from logs')
-
-      console.log(data)
 
       t.equals(data.order.length, 2, 'should have 2 longs in the order')
       t.ok(data.data[files[0]].size, 'should have stat data for first log file')

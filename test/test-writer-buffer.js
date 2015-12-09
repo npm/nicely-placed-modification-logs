@@ -1,5 +1,5 @@
 var common = require('./helper/common')
-var writer = require('../lib/writer.js')
+var writer = require('../')
 var test = require('tape')
 var fs = require('fs')
 var path = require('path')
@@ -15,12 +15,13 @@ test('can serialize written object', function (t) {
   var save = writer({dir:dir})
  
   var b = new Buffer("hi")
-  save(b,function(err){
+  save.write(b,function(err){
     t.ok(!err,'should not have error')
 
     var buf = fs.readFileSync(path.join(dir,'0000000000.log'))
     t.equals(buf+"",'hi\n','should have written buffer')
 
+    save.close()
     t.end()
     clean()
   })
