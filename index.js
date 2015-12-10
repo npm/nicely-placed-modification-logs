@@ -27,7 +27,7 @@ module.exports = function (opts) {
   var opening = false
   var _fd = false
 
-  // figure everything out and after save anything that's waiting.
+  // figure everything out then save anything that's waiting.
   listLogs(opts.dir, suffix, function (err, results) {
     // TODO make a good story for errors and refactor
     if (err) throw err
