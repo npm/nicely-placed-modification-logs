@@ -89,7 +89,7 @@ module.exports = function (opts) {
     if(!logState.order.length) return;
     var newKey = logState.order[logState.order.length - 1]
     var newest = logState.data[newKey]
-    if (newest.size < maxSize) return newest
+    if (newest.size < maxSize) return newKey
   }
 
   // manage the single active  file descriptor
