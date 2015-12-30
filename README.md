@@ -28,22 +28,3 @@ s.on('data',function(event){
 
 ```
 
-READER
-------
-
-```js
-
-var modlogs = require('nicely-placed-modification-logs')
-
-// optional place to start from in the new stream
-var seq = "22-0000001"
-var stream = modlogs.read({dir:__dirname+"/data", start:seq})
-
-stream.on('data',function(line){
-  // this is the sequence id used to resume
-  console.log(line.seq)
-  console.log(line+'')
-})
-
-```
-
