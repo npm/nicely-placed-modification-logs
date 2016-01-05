@@ -45,7 +45,7 @@ module.exports = function (opts) {
 
     var isBuffer = Buffer.isBuffer(data)
     if (!isBuffer && typeof data === 'object') {
-      data = JSON.stringify(data) + delim
+      data = new Buffer(JSON.stringify(data) + delim)
     } else {
       // data must have delimiter.
       var d = delim
