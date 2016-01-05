@@ -1,6 +1,6 @@
 {
   "name": "nicely-placed-modification-logs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "write modifications/events to append only logs. process those changes sequentially. like an _changes feed but from disk",
   "main": "index.js",
   "scripts": {
