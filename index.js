@@ -158,9 +158,7 @@ module.exports = function (opts) {
         if (err) return done(err)
         // sync to sure the data is really on disk so i never will say something made it without it actually making it.
         fs.fsync(_fd, function (err) {
-          // TODO update size in logState
           logState.data[logState.order[logState.order.length - 1]].size += bufs.length
-
           // call all callbacks
           done(err)
         })

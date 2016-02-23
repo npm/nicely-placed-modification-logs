@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/npm/nicely-placed-modification-logs#readme",
   "dependencies": {
+    "bytewise": "^1.1.0",
     "end-of-stream": "^1.1.0",
     "keep-reading": "^1.1.0",
     "line-stream": "^1.0.0",
