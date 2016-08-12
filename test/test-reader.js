@@ -1,4 +1,5 @@
 var reader = require('../lib/reader')
+var namelog = require('../lib/namelog')
 var test = require('tape')
 
 test("validate sequence false sequence",function(t){
@@ -64,4 +65,9 @@ test("sequence doesnt match any valid sequence but is larger than the largest se
   t.end()
 })
 
-
+test("parse legacy sequence",function(t){
+  var res = namelog.parseSeq("0000000000-42417232d460000000",'/','.log')
+  t.equals(res.file,'0000000000')
+  t.equals(res.ofset,19082566)
+  t.end()  
+})
